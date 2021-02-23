@@ -1,14 +1,12 @@
+import "reflect-metadata";
 import express from "express";
+
+import "./database";
+import userRouter from "./routes";
 
 const app = express();
 
-// Criação de uma rota com o método http GET - Para Fazer uma Busca
-app.get("/users", (request, response) => {
-    return response.json({ message: "Helo World, I'm NLW - 04" });
-});
-
-app.post("/", (request, response) => {
-    return response.json({ "message": "Os dados foram salvos com sucesso!" })
-})
+app.use(express.json()); // Faz com que o express leia os dados das requisições (JSON)
+app.use(userRouter)
 
 app.listen(3333, () => console.log("Server is running!!!"))
