@@ -1,10 +1,14 @@
 import { Router } from 'express';
+import SurveyController from './controllers/SurveyController';
 import UserController from './controllers/UserController';
 
-const userRouter = Router();
+const router = Router();
 const userController = new UserController();
+const surveyController = new SurveyController();
 
 // Rota para a criação de user
-userRouter.post('/users', userController.create)
+router.post('/users', userController.create);
+router.post('/surveys', surveyController.create);
+router.get('/surveys', surveyController.show);
 
-export default userRouter;
+export default router;

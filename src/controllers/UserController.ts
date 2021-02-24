@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
-import User from "../models/User";
+import { getCustomRepository } from "typeorm";
+import UserRepository from "../repositories/UserRepository";
 
 // O controller tem a missão de lidar com as regras de negócios da criação dos users
 class UserController {
     async create(request: Request, response: Response) {
         const { name, email } = request.body;
 
-        /**O método getRepository serve para aceder ao repositório da entidade
+        /**O método getCustomRepository serve para aceder ao repositório customizado
          * O repositório é um gestor de entidade,
          * Ele possui vários métodos para manipular uma entidade
          * Aqui estamos a passar os métodos de manipulação do User ao userRepositóry
          */
-        const userRepository = getRepository(User);
+        const userRepository = getCustomRepository(UserRepository);
 
         // Antes de criar um user, verifica se existe um através do email
         const userAlreadyExists = await userRepository.findOne({
@@ -38,7 +38,7 @@ class UserController {
         await userRepository.save(user)
 
         // Devolve um JSON como resposta
-        return response.json(user)
+        return response.status(201).json(user)
     }
 }
 
